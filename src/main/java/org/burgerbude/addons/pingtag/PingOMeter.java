@@ -25,13 +25,13 @@ public class PingOMeter {
 
     @SubscribeEvent
     public void updatePing(TickEvent.ClientTickEvent event) {
-        if (minecraft.player == null) return;
+        if (minecraft.thePlayer == null) return;
 
         if (event.phase == TickEvent.Phase.END) {
             if (this.lastPingUpdate + 5000L <= System.currentTimeMillis()) {
                 this.lastPingUpdate = System.currentTimeMillis();
 
-                Objects.requireNonNull(minecraft.getConnection()).getPlayerInfoMap().forEach(networkPlayerInfo -> {
+                Objects.requireNonNull(minecraft.getNetHandler()).getPlayerInfoMap().forEach(networkPlayerInfo -> {
                     if (networkPlayerInfo.getGameProfile().getId().getLeastSignificantBits() == 0L) return;
 
                     pingMap.put(networkPlayerInfo.getGameProfile().getId(), networkPlayerInfo(networkPlayerInfo.getGameProfile().getName()).getResponseTime());
@@ -47,7 +47,7 @@ public class PingOMeter {
     }
 
     public NetworkPlayerInfo networkPlayerInfo(String name) {
-        Collection<NetworkPlayerInfo> collection = Objects.requireNonNull(minecraft.getConnection()).getPlayerInfoMap();
+        Collection<NetworkPlayerInfo> collection = Objects.requireNonNull(minecraft.getNetHandler()).getPlayerInfoMap();
         return collection.stream().filter(networkPlayerInfo -> networkPlayerInfo.getGameProfile().getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 

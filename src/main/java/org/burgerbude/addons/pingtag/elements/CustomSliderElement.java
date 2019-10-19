@@ -1,7 +1,6 @@
 package org.burgerbude.addons.pingtag.elements;
 
 import net.labymod.api.LabyModAddon;
-import net.labymod.ingamegui.Module;
 import net.labymod.main.LabyMod;
 import net.labymod.main.ModSettings;
 import net.labymod.settings.elements.ControlElement;
@@ -9,8 +8,6 @@ import net.labymod.utils.DrawUtils;
 import net.labymod.utils.ModColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 
 import java.util.function.Consumer;
 

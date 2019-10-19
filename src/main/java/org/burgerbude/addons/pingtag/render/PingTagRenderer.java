@@ -32,7 +32,7 @@ public class PingTagRenderer {
     }
 
     public void renderTag(EntityPlayer player, double posX, double posY, double posZ, float partialTicks) {
-        double distance = player.getDistanceSq(this.renderManager.renderViewEntity);
+        double distance = player.getDistanceToEntity(this.renderManager.livingPlayer);
 
         int ping = this.addon.pingOMeter().playerPing(player.getUniqueID());
 
@@ -60,13 +60,13 @@ public class PingTagRenderer {
             //DamageIndicator
 
             if (64 * 64 >= addon.damageIndicatorViewDistance() * addon.damageIndicatorViewDistance()) {
-                if (this.addon.damageIndicatorIsActive() && player != Minecraft.getMinecraft().player) {
+                if (this.addon.damageIndicatorIsActive() && player != Minecraft.getMinecraft().thePlayer) {
                     height += ((double) this.addon.damageIndicatorScale() / 100) * .23;
                 }
             }
 
             //Friend Tags
-            if (this.addon.friendTagsIsActive() && player != Minecraft.getMinecraft().player && isFriend(player.getUniqueID())) {
+            if (this.addon.friendTagsIsActive() && player != Minecraft.getMinecraft().thePlayer && isFriend(player.getUniqueID())) {
                 height += .23;
             }
 
