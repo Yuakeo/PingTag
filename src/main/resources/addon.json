@@ -1,0 +1,6 @@
+{
+  "uuid": "%uuid%",
+  "name": "PingTag",
+  "version": 1,
+  "mainClass": "org.burgerbude.addons.pingtag.PingTag"
+}
