@@ -41,14 +41,13 @@ public class PingTag extends LabyModAddon {
             Class<?> damageIndicatorClass = Class.forName("net.labymod.addons.damageindicator.DamageIndicator");
             this.damageIndicatorUniqueId = AddonLoader.getUUIDByClass(damageIndicatorClass);
         } catch (ClassNotFoundException ignored) {
-            Debug.log(Debug.EnumDebugMode.ADDON, "DamageIndicator isn't installed..");
         }
 
         try {
             Class<?> friendTagsClass = Class.forName("de.cerus.friendtags.FriendTags");
             this.friendTagsUniqueId = AddonLoader.getUUIDByClass(friendTagsClass);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException ignored) {
+
         }
 
         this.pingOMeter = new PingOMeter();
