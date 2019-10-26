@@ -4,10 +4,10 @@ buildscript {
         maven { url = "http://files.minecraftforge.net/maven" }
     }
     dependencies {
-        if(minecraft18.toBoolean()) {
-            classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
-        }  else {
+        if (minecraft18.toBoolean()) {
             classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        } else {
+            classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
         }
     }
 }

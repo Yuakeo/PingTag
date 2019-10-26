@@ -143,6 +143,7 @@ public class PingTag extends LabyModAddon {
     }
 
     public boolean damageIndicatorIsActive() {
+        if (damageIndicatorUniqueId == null) return false;
         LabyModAddon addon = AddonLoader.getAddonByUUID(damageIndicatorUniqueId);
 
         damageIndicatorScale = addon.getConfig().has("scale") ? addon.getConfig().get("scale").getAsInt() : 100;
@@ -152,6 +153,8 @@ public class PingTag extends LabyModAddon {
     }
 
     public boolean friendTagsIsActive() {
+        if (friendTagsUniqueId == null) return false;
+
         LabyModAddon addon = AddonLoader.getAddonByUUID(friendTagsUniqueId);
         return !addon.getConfig().has("enabled") || addon.getConfig().get("enabled").getAsBoolean();
     }
