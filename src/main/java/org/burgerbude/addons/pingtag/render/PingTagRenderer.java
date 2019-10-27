@@ -10,6 +10,8 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.scoreboard.ScoreObjective;
+import net.minecraft.scoreboard.Scoreboard;
 import org.burgerbude.addons.pingtag.PingTag;
 import org.lwjgl.opengl.GL11;
 
@@ -72,6 +74,16 @@ public class PingTagRenderer {
                 height += .23;
             }
 
+            //Scoreboard Hearts
+            if (distance < 10) {
+                Scoreboard scoreboard = player.getWorldScoreboard();
+                ScoreObjective scoreObjective = scoreboard.getObjectiveInDisplaySlot(2);
+
+                if (scoreObjective != null) {
+                    height += fontRenderer.FONT_HEIGHT * 1.15F * 0.026666667F;
+                }
+            }
+
             height += this.addon.pingTagSize() / 6 - .25;
 
             //Move to the player position
@@ -91,7 +103,7 @@ public class PingTagRenderer {
             String text = (this.addon.rainbow() ? "" : pingColor(ping)) + "" + ping + " ms";
             int textPosition = fontRenderer.getStringWidth(text) / 2;
 
-            this.addon.getApi().getDrawUtils().drawRect(-textPosition - 1, -1, textPosition + 1,  9, new Color(0.0F, 0.0F, 0.0F, .25F).hashCode());
+            this.addon.getApi().getDrawUtils().drawRect(-textPosition - 1, -1, textPosition + 1, 9, new Color(0.0F, 0.0F, 0.0F, .25F).hashCode());
 
             GlStateManager.enableBlend();
 
