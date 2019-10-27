@@ -5,7 +5,6 @@ import net.labymod.api.LabyModAddon;
 import net.labymod.gui.elements.DropDownMenu;
 import net.labymod.main.LabyMod;
 import net.labymod.settings.elements.*;
-import net.labymod.support.util.Debug;
 import net.labymod.utils.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import org.burgerbude.addons.pingtag.elements.CustomSliderElement;
@@ -148,7 +147,7 @@ public class PingTag extends LabyModAddon {
         damageIndicatorScale = addon.getConfig().has("scale") ? addon.getConfig().get("scale").getAsInt() : 100;
         damageIndicatorViewDistance = addon.getConfig().has("distance") ? addon.getConfig().get("distance").getAsInt() : 50;
 
-        return addon.getConfig().has("visible") && addon.getConfig().get("visible").getAsBoolean();
+        return !addon.getConfig().has("visible") || addon.getConfig().get("visible").getAsBoolean();
     }
 
     public boolean friendTagsIsActive() {
