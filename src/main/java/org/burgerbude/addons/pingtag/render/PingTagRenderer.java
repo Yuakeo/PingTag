@@ -7,6 +7,7 @@ import net.labymod.user.group.EnumGroupDisplayType;
 import net.labymod.utils.ModColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,11 +35,14 @@ public class PingTagRenderer {
     }
 
     public void renderTag(EntityPlayer player, double posX, double posY, double posZ, float partialTicks) {
+        if(!this.addon.allow()) return;
         double distance = player.getDistanceSq(this.renderManager.renderViewEntity);
 
         int ping = this.addon.pingOMeter().playerPing(player.getUniqueID());
 
         if (player == Minecraft.getMinecraft().player && Minecraft.getMinecraft().gameSettings.hideGUI) return;
+
+        if (player.isInvisible()) return;
 
         if (!player.isSneaking() && distance <= 64 * 64 && ping > 0) {
 
@@ -103,7 +107,7 @@ public class PingTagRenderer {
             String text = (this.addon.rainbow() ? "" : pingColor(ping)) + "" + ping + " ms";
             int textPosition = fontRenderer.getStringWidth(text) / 2;
 
-            this.addon.getApi().getDrawUtils().drawRect(-textPosition - 1, -1, textPosition + 1, 9, new Color(0.0F, 0.0F, 0.0F, .25F).hashCode());
+            Gui.drawRect(-textPosition - 1, -1, textPosition + 1, 9, new Color(0.0F, 0.0F, 0.0F, .25F).hashCode());
 
             GlStateManager.enableBlend();
 
