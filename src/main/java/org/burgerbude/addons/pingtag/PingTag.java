@@ -2,10 +2,13 @@ package org.burgerbude.addons.pingtag;
 
 import net.labymod.addon.AddonLoader;
 import net.labymod.api.LabyModAddon;
+import net.labymod.api.events.ServerMessageEvent;
 import net.labymod.gui.elements.DropDownMenu;
 import net.labymod.main.LabyMod;
 import net.labymod.settings.elements.*;
+import net.labymod.utils.Consumer;
 import net.labymod.utils.Material;
+import net.labymod.utils.ServerData;
 import net.minecraft.entity.player.EntityPlayer;
 import org.burgerbude.addons.pingtag.elements.CustomSliderElement;
 import org.burgerbude.addons.pingtag.render.PingTagRenderer;
@@ -22,6 +25,8 @@ public class PingTag extends LabyModAddon {
 
     private PingOMeter pingOMeter;
     private PingTagRenderer tagRenderer;
+
+    private boolean allow;
 
     private double pingTagSize;
     private boolean rainbow;
@@ -51,12 +56,31 @@ public class PingTag extends LabyModAddon {
         this.pingOMeter = new PingOMeter();
         this.tagRenderer = new PingTagRenderer(this);
 
+        this.allow = true;
+
         this.getApi().registerForgeListener(this.pingOMeter);
+
+        this.getApi().getEventManager().registerOnJoin(serverData -> {
+            if (serverData == null) return;
+
+            if (serverData.getIp().contains("hypixel")) allow = false;
+
+            if (!allow)
+                this.getApi().displayMessageInChat("§8[§6§lPing§eTag§8] §c§lPingTag isn't allowed on this server.");
+        });
+
+        this.getApi().getEventManager().registerOnQuit(serverData -> allow = true);
 
         this.getApi().getEventManager().register((entity, positionX, positionY, positionZ, partialTicks) -> {
             if (!(entity instanceof EntityPlayer)) return;
 
             this.tagRenderer.renderTag((EntityPlayer) entity, positionX, positionY, positionZ, partialTicks);
+        });
+
+        this.getApi().getEventManager().register((ServerMessageEvent) (channel, jsonElement) -> {
+            if (channel.equals("pingtag")) {
+                allow = !jsonElement.getAsJsonObject().has("allowed") || jsonElement.getAsJsonObject().get("allowed").getAsBoolean();
+            }
         });
     }
 
@@ -163,5 +187,9 @@ public class PingTag extends LabyModAddon {
 
     public int damageIndicatorScale() {
         return damageIndicatorScale;
+    }
+
+    public boolean allow() {
+        return this.allow;
     }
 }

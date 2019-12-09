@@ -34,11 +34,14 @@ public class PingTagRenderer {
     }
 
     public void renderTag(EntityPlayer player, double posX, double posY, double posZ, float partialTicks) {
+        if (!this.addon.allow()) return;
         double distance = player.getDistanceToEntity(this.renderManager.livingPlayer);
 
         int ping = this.addon.pingOMeter().playerPing(player.getUniqueID());
 
         if (player == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.hideGUI) return;
+
+        if (player.isInvisible()) return;
 
         if (!player.isSneaking() && distance <= 64 * 64 && ping > 0) {
 
