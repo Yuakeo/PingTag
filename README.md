@@ -10,7 +10,7 @@ The message key is \"pingtag\"
 The Json must look like this:
 ```json
 {
- "allowed": false,
+ "allowed": false
 }
 ```
 
